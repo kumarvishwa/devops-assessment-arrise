@@ -1,0 +1,9 @@
+aws_region  = "us-east-1"
+aws_profile = null
+environment = "assessment"
+owner       = "vikash"
+
+# subnet_id = "subnet-0123456789abcdef0"
+# ssh_cidr  = "203.0.113.10/32"
+
+# The five instances live in variables.tf. Copy that map here to override it.

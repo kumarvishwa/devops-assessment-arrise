@@ -1,0 +1,44 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  TF_IN_AUTOMATION: "1"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.4.6
+
+      - name: Format and JSON
+        run: |
+          terraform fmt -check -recursive
+          python3 -m json.tool policies/ci-pipeline.json >/dev/null
+
+      - name: Validate remote-state bootstrap
+        working-directory: bootstrap/remote-state
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate
+
+      - name: Validate EC2 stack
+        working-directory: environments/ec2
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate
+
+      - name: Validate IAM stack
+        working-directory: environments/iam
+        run: |
+          terraform init -backend=false -input=false
+          terraform validate

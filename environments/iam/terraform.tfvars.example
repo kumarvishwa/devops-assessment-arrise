@@ -1,0 +1,12 @@
+aws_region   = "us-east-1"
+account_a_id = "000000000000"
+account_b_id = "111111111111"
+
+# account_a_profile = "account-a"
+# account_b_profile = "account-b"
+
+group2_users               = ["vikash", "meera"]
+require_mfa                = true
+create_access_keys         = true
+cross_account_external_id  = "arrise-assessment-external-id"
+account_b_bucket_name      = "arrise-account-b-data"
